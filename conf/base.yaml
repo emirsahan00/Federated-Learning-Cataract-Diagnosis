@@ -1,0 +1,20 @@
+# Eğitim Konfigürasyonu
+num_rounds: 1        # Toplam iletişim turu sayısı
+num_clients: 1        # Toplam istemci sayısı
+batch_size: 8         # Yerel eğitim için batch boyutu
+num_classes: 2        # Çıkış sınıfı sayısı
+num_clients_per_round_fit: 1  # Her eğitim turunda seçilen istemci sayısı
+num_clients_per_round_eval: 1 # Her değerlendirme turunda seçilen istemci sayısı
+
+# Yerel İstemciler için Eğitim Parametreleri
+config_fit:
+  lr: 0.0001         # Öğrenme oranı
+  momentum: 0.9      # Optimizasyon için momentum
+  local_epochs: 1    # Her turda yapılan yerel eğitim epoch sayısı
+  weight_decay: 0.0001  # L2 regularizasyon
+  temperature: 2.0   # Tahmin sıcaklık parametresi
+
+# Varsayılan Ayarlar
+defaults:
+  - model: net       # Model konfigürasyonuna işaret eder
+  - strategy: fedadagrad # Strateji konfigürasyonuna işaret eder

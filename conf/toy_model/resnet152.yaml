@@ -1,0 +1,4 @@
+# TorchVision kütüphanesindeki ResNet152 modelini oluşturur.
+_target_: torchvision.models.resnet152  # ResNet-152 modeli
+num_classes: ${foo}  # Modelin çıktısındaki sınıf sayısı. `foo`, yapılandırma dosyasındaki bir değişkene bağlanır.
+pretrained: True  # Önceden eğitilmiş ağırlıkları kullanır.

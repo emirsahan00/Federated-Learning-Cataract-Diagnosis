@@ -1,0 +1,31 @@
+# --- Flower (Federated Learning Library) için FedAdagrad stratejisi yapılandırması
+# Points to: https://github.com/adap/flower/blob/main/src/py/flwr/server/strategy/fedadagrad.py
+
+_target_: flwr.server.strategy.FedAdagrad
+
+# --- Genel Federated Learning ayarları ---
+fraction_fit: 0.5
+min_fit_clients: ${num_clients_per_round_fit}
+fraction_evaluate: 0.01
+min_evaluate_clients: ${num_clients_per_round_eval}
+min_available_clients: ${num_clients}
+
+# --- Eğitim sürecinde kullanılan ek yapılandırma fonksiyonu ---
+on_fit_config_fn:
+    _target_: server.get_on_fit_config
+    config: ${config_fit}
+
+# --- FedAdagrad stratejisine özgü hiperparametreler ---
+eta: 0.1  # Global öğrenme oranı
+eta_l: 0.01  # Yerel öğrenme oranı (istemci tarafı)
+tau: 0.001  # Epsilon değeri (sayısal kararlılık için küçük bir sabit)
+initial_parameters:
+    _target_: model.model_to_parameters
+    model: ${model}
+
+# --- Adapt parametreleri ---
+accept_failures: True  # İstemci hatalarının kabul edilip edilmeyeceği
+
+# --- Notlar ---
+# evaluate_fn burada tanımlanmamıştır çünkü runtime'da tanımlanması daha uygundur
+# test_loader gibi çalışma zamanı argümanlarına ihtiyaç duyar

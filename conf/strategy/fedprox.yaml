@@ -1,0 +1,37 @@
+# --- Bu kod, Flower (Federated Learning Library) kullanılarak bir Federated Learning (FL) stratejisini tanımlamak için kullanılıyor.
+
+_target_: flwr.server.strategy.FedProx  # FL stratejisi olarak FedProx kullanılıyor.
+
+# --- Genel Federated Learning ayarları ---
+fraction_fit: 0.5  # Eğitim (fit) için katılacak istemcilerin oranını belirler.
+min_fit_clients: ${num_clients_per_round_fit}  
+# Her turda eğitim sürecine katılması gereken minimum istemci sayısı.
+
+fraction_evaluate: 0.01  
+# Değerlendirme (evaluate) için katılacak istemcilerin oranını belirler.
+
+min_evaluate_clients: ${num_clients_per_round_eval}  
+# Her turda değerlendirme sürecine katılması gereken minimum istemci sayısı.
+
+min_available_clients: ${num_clients}  
+# Eğitim ve değerlendirme işlemleri için gerekli olan toplam minimum istemci sayısı.
+
+# --- Eğitim sürecinde kullanılan ek bir yapılandırma fonksiyonu ---
+on_fit_config_fn:  
+  _target_: server.get_on_fit_config  
+  # Eğitimi yapılandırmak için kullanılan bir fonksiyonu işaret eder.
+  config: ${config_fit}  
+  # Eğitim sırasında kullanılacak ek yapılandırma parametreleri.
+
+# --- FedProx stratejisine özgü hiperparametreler ---
+ # FedProx algoritmasının öğrenme oranı. Global modelin güncellenmesi için kullanılır.
+proximal_mu: 0.1  # FedProx için proximal teriminin parametresi. Bu, yerel model güncellemelerindeki sapmayı kontrol eder.
+initial_parameters:  
+  _target_: model.model_to_parameters  
+  # Başlangıç parametreleri, verilen modelin parametrelerine dayalı olarak tanımlanır.
+  model: ${model}  
+  # Model parametreleri için bir referans. `${model}`, yapılandırma dosyasından alınan model tanımını işaret eder.
+
+# --- Ek açıklamalar ---
+# evaluate_fn (değerlendirme fonksiyonu) burada tanımlanabilir, ancak test yükleyicisi (test loader) gibi
+# runtime'da tanımlanacak argümanlara ihtiyaç duyduğu için ana kodda tanımlanması daha mantıklıdır. 

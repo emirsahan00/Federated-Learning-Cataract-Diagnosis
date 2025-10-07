@@ -1,0 +1,4 @@
+---
+# TorchVision kütüphanesindeki ResNet18 modelini oluşturur ve sınıf sayısını yapılandırma dosyasındaki `foo` parametresine ayarlar.
+_target_: torchvision.models.resnet18  # ResNet18 modelini temsil eder.
+num_classes: ${foo}  # ResNet18'in çıktısındaki sınıf sayısı. `foo`, yapılandırma dosyasındaki bir değişkene bağlanır.

@@ -1,0 +1,46 @@
+# --- Bu kod, Flower (Federated Learning Library) kullanılarak bir Federated Learning (FL) stratejisini tanımlamak için kullanılıyor.
+
+# Points to: https://github.com/adap/flower/blob/main/src/py/flwr/server/strategy/fedadam.py
+# Yukarıda belirtilen URL, kullanılan `FedAdam` stratejisinin Flower içindeki tanımına işaret ediyor.
+_target_: flwr.server.strategy.FedAdam  # FL stratejisi olarak FedAdam kullanılıyor. Bu, standart bir FedAdam stratejisi veya özel stratejilere işaret edebilir.
+
+# --- Genel Federated Learning ayarları ---
+fraction_fit: 0.5  # Eğitim (fit) için katılacak istemcilerin oranını belirler. Çok düşük bir değerle başlatılmış.
+min_fit_clients: ${num_clients_per_round_fit}  
+# Her turda eğitim sürecine katılması gereken minimum istemci sayısı. Bu değer bir önceki tanımlı değişken `num_clients_per_round_fit`'ten alınır.
+
+fraction_evaluate: 0.01  
+# Değerlendirme (evaluate) için katılacak istemcilerin oranını belirler.
+
+min_evaluate_clients: ${num_clients_per_round_eval}  
+# Her turda değerlendirme sürecine katılması gereken minimum istemci sayısı. Bu değer `conf/base.yaml` içinde tanımlanmıştır.
+
+min_available_clients: ${num_clients}  
+# Eğitim ve değerlendirme işlemleri için gerekli olan toplam minimum istemci sayısı. Bu da başka bir konfigürasyondan alınır.
+
+# --- Eğitim sürecinde kullanılan ek bir yapılandırma fonksiyonu ---
+on_fit_config_fn:  
+  _target_: server.get_on_fit_config  
+  # Eğitimi yapılandırmak için kullanılan bir fonksiyonu işaret eder.
+  config: ${config_fit}  
+  # Eğitim sırasında kullanılacak ek yapılandırma parametreleri.
+
+# --- FedAdam stratejisine özgü hiperparametreler ---
+eta: 0.2  
+# FedAdam algoritmasının öğrenme oranını temsil eder. Global modelin güncellenmesi için kullanılır.
+
+eta_l: 0.01  
+# İstemci tarafındaki öğrenme oranını ifade eder. Ancak örnek kodda bu özelliğin uygulanmadığı belirtilmiş.
+
+tau: 0.1  
+# Güncellemeler sırasında model parametrelerindeki değişim oranını sınırlayan bir parametre.
+
+initial_parameters:  
+  _target_: model.model_to_parameters  
+  # Başlangıç parametreleri, verilen modelin parametrelerine dayalı olarak tanımlanır.
+  model: ${model}  
+  # Model parametreleri için bir referans. `${model}`, yapılandırma dosyasından alınan model tanımını işaret eder.
+
+# --- Ek açıklamalar ---
+# evaluate_fn (değerlendirme fonksiyonu) burada tanımlanabilir, ancak test yükleyicisi (test loader) gibi
+# runtime'da tanımlanacak argümanlara ihtiyaç duyduğu için ana kodda tanımlanması daha mantıklıdır.

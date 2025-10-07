@@ -1,0 +1,4 @@
+# TorchVision kütüphanesindeki ConvNeXt-XLarge modelini oluşturur ve sınıf sayısını yapılandırma dosyasındaki `foo` parametresine ayarlar.
+_target_: torchvision.models.convnext_large  # ConvNeXt Large modeli
+num_classes: ${foo}  # Modelin çıktısındaki sınıf sayısı. `foo`, yapılandırma dosyasındaki bir değişkene bağlanır.
+pretrained: True  # Önceden eğitilmiş ağırlıkları kullanır.

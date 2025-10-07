@@ -1,0 +1,16 @@
+# --- Bu kod, PyTorch'un TorchVision kütüphanesindeki MobileNetV2 modelini oluşturmak ve özelleştirmek için kullanılıyor.
+
+# TorchVision'un MobileNetV2 modelini başlatacak.
+_target_: torchvision.models.mobilenet_v2  
+# `_target_` anahtarı, hangi modelin veya nesnenin oluşturulacağını belirtir. 
+# Burada, TorchVision'un `mobilenet_v2` modeli seçilmiş.
+
+num_classes: ${foo}  
+# Modelin çıktı katmanındaki sınıf sayısını tanımlar.
+# `${foo}` değişkeni bir yapılandırma dosyasından (config) alınır ve sınıf sayısını belirtir.
+# Örneğin, bir görüntü sınıflandırma probleminde, sınıf sayısı veri kümenize göre ayarlanır 
+# (örneğin, MNIST için 10 sınıf, CIFAR-100 için 100 sınıf).
+
+# Özet:
+# Bu kod, TorchVision'un MobileNetV2 modelini özelleştirerek, son katmanındaki sınıf sayısını ihtiyaçlarınıza uygun hale getirir.
+# `foo` değişkeni, yapılandırma dosyasında önceden tanımlı olmalıdır.

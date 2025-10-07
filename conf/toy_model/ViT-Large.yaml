@@ -1,0 +1,4 @@
+# TorchVision kütüphanesindeki Vision Transformer (ViT-Large) modelini oluşturur.
+_target_: torchvision.models.vit_l_16  # Vision Transformer Large modeli
+num_classes: ${foo}  # Modelin çıktısındaki sınıf sayısı. `foo`, yapılandırma dosyasındaki bir değişkene bağlanır.
+pretrained: True  # Önceden eğitilmiş ağırlıkları kullanır.

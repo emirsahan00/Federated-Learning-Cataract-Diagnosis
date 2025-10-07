@@ -1,0 +1,40 @@
+# --- Bu kod, Flower (Federated Learning Library) kullanılarak bir Federated Learning (FL) stratejisini tanımlamak için kullanılıyor.
+
+# Points to: https://github.com/adap/flower/blob/main/src/py/flwr/server/strategy/fedsgd.py
+# Yukarıda belirtilen URL, kullanılan `FedAdagrad ` stratejisinin Flower içindeki tanımına işaret ediyor.
+_target_: flwr.server.strategy.FedAdagrad   # FL stratejisi olarak FedSGD kullanılıyor.
+
+# --- Genel Federated Learning ayarları ---
+fraction_fit: 1.0  # Eğitim (fit) için tüm istemcilerin katılmasını sağlar. FedSGD, tüm istemcilerin katılımını gerektirir.
+min_fit_clients: ${num_clients_per_round_fit}  
+# Her turda eğitim sürecine katılması gereken minimum istemci sayısı. Bu değer bir önceki tanımlı değişken `num_clients_per_round_fit`'ten alınır.
+
+fraction_evaluate: 1.0  
+# Değerlendirme (evaluate) için tüm istemcilerin katılmasını sağlar.
+
+min_evaluate_clients: ${num_clients_per_round_eval}  
+# Her turda değerlendirme sürecine katılması gereken minimum istemci sayısı. Bu değer `conf/base.yaml` içinde tanımlanmıştır.
+
+min_available_clients: ${num_clients}  
+# Eğitim ve değerlendirme işlemleri için gerekli olan toplam minimum istemci sayısı. Bu da başka bir konfigürasyondan alınır.
+
+# --- Eğitim sürecinde kullanılan ek bir yapılandırma fonksiyonu ---
+on_fit_config_fn:  
+  _target_: server.get_on_fit_config  
+  # Eğitimi yapılandırmak için kullanılan bir fonksiyonu işaret eder.
+  config: ${config_fit}  
+  # Eğitim sırasında kullanılacak ek yapılandırma parametreleri.
+
+# --- FedSGD stratejisine özgü hiperparametreler ---
+eta: 0.01  
+# FedSGD algoritmasının öğrenme oranını temsil eder. Global modelin güncellenmesi için kullanılır.
+
+initial_parameters:  
+  _target_: model.model_to_parameters  
+  # Başlangıç parametreleri, verilen modelin parametrelerine dayalı olarak tanımlanır.
+  model: ${model}  
+  # Model parametreleri için bir referans. `${model}`, yapılandırma dosyasından alınan model tanımını işaret eder.
+
+# --- Ek açıklamalar ---
+# evaluate_fn (değerlendirme fonksiyonu) burada tanımlanabilir, ancak test yükleyicisi (test loader) gibi
+# runtime'da tanımlanacak argümanlara ihtiyaç duyduğu için ana kodda tanımlanması daha mantıklıdır.

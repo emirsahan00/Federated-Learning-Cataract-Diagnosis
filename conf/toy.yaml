@@ -1,0 +1,66 @@
+---
+
+
+
+# Basit bir üst seviye eleman
+foo: 123
+
+# Değişkenler hiyerarşisi
+bar:
+  baz: [1.0, 3.141592, 99]
+  bazz: 24
+  more:
+    bla: "hello"
+    blabla: ${foo} # Bu dosyanın en üstünde tanımlanan `foo`ya referans
+
+# -------------------------------------------------------------------------------------------------
+
+# Tüm argümanları önceden tanımlanmış bir fonksiyonu tanımlayan bir düğüm
+my_func:
+  _target_: toy.function_test
+  x: 123 # Fonksiyonunuz için bir isimlendirilmiş argüman
+  y: 321 # Fonksiyonunuz için başka bir isimlendirilmiş argüman
+
+# Hydra'ya bu fonksiyonun bir partial'ını oluşturmasını söylüyoruz. Bu, ikinci argüman (y) yalnızca çalışma zamanında tanımlandığında kullanışlıdır.
+my_partial_func:
+  _target_: toy.function_test
+  _partial_: true
+  x: 123
+
+# Bir nesne oluştur
+my_object:
+  _target_: toy.MyClass
+  x: 32 # Sınıfın bir özelliği
+
+# -------------------------------------------------------------------------------------------------
+
+
+# Hydra tarafından tanımlanan nesneleri başka nesnelerin içine yerleştirebilirsiniz
+# ve varsayılan olarak tümü oluşturulacaktır.
+my_complex_object:
+  _target_: toy.MyComplexClass
+  my_object:
+    _target_: toy.MyClass
+    x: ${bar.bazz} # bar.bazz'ye referans
+
+# Bazı durumlarda iç nesneler, ana nesneyle aynı anda oluşturulamayabilir
+# (belki bazı harici değişkenlere veya işlemlere bağlıdır). Hydra'ya nesneleri özyinelemeli
+# bir şekilde oluşturmamasını söyleyerek bunu önleyebilirsiniz.
+my_complex_object_non_recursive:
+  _target_: toy.MyComplexClass
+  _recursive_: false
+  my_object:
+    _target_: toy.MyClass
+    # Argümanı çalışma zamanında ileteceğiz
+
+# Bazen yapılandırma dosyanızı, her biri belirli bir amaç için tasarlanmış birkaç dosyaya ayırmak istersiniz.
+# Örneğin, bir dizi .yaml dosyasını veri setleri için, diğerini model mimarileri için kullanabilirsiniz. Flower kullanırken
+# muhtemelen stratejiler için bir dizi .yaml, farklı istemci türleri için bir başka set oluşturmak isteyebilirsiniz.
+# Hydra ile bu yapılandırma dosyalarını çok özel bir şekilde yapılandırmak istersiniz. Örneğin,
+# bir düğümün (ör. 'toy_model') farklı yapılandırma dosyalarıyla parametreleştirilmesini istiyorsanız, bunların tümü
+# `toy_model` adlı bir dizin içine yerleştirilmelidir, ardından aşağıdaki gibi farklı .yaml dosyalarını seçebilirsiniz.
+defaults:
+  - toy_model: resnet18 # conf/toy_model/resnet18.yaml dosyasına işaret eder
+  # Bu parametreyi geçersiz kılmak isterseniz "default" anahtar kelimesini düşünmeden yapabilirsiniz
+  # python toy.py toy_model=efficientnetb3
+  # Unutmayın ki `defaults` bir listedir (yani, her bir eleman `-` ile başlar)

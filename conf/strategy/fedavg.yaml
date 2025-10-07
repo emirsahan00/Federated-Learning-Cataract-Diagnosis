@@ -1,0 +1,40 @@
+# Federated Learning Strateji Konfigürasyonu
+_target_: flwr.server.strategy.FedAvg
+
+# Her turda eğitime katılacak istemcilerin oranı (fit)
+fraction_fit: 0.1  # Eğitim turlarında daha fazla istemci dahil etmek için 0.00001'den 0.1'e çıkarıldı.
+
+# Her turda eğitim için gereken minimum istemci sayısı
+min_fit_clients: ${num_clients_per_round_fit}
+
+# Her turda değerlendirmeye katılacak istemcilerin oranı
+fraction_evaluate: 0.1  # Değerlendirme turlarında daha fazla istemci dahil etmek için 0.00001'den 0.1'e çıkarıldı.
+
+# Her turda değerlendirme için gereken minimum istemci sayısı
+min_evaluate_clients: ${num_clients_per_round_eval}
+
+# Süreç için gerekli olan minimum istemci sayısı
+min_available_clients: ${num_clients}
+
+# Fit işlemi için ek yapılandırma fonksiyonu
+on_fit_config_fn:
+  _target_: server.get_on_fit_config
+  config: ${config_fit}
+
+# Genel Konfigürasyon
+num_rounds: 100  # Daha fazla iletişim ve daha iyi yakınsama sağlamak için tur sayısı artırıldı.
+num_clients: 100  # Toplam istemci sayısı sabit tutuldu.
+batch_size: 32  # Daha kararlı gradyan güncellemeleri için batch boyutu 10'dan artırıldı.
+num_classes: 2  # Çıkış sınıfı sayısı değişmedi (ikili sınıflandırma).
+num_clients_per_round_fit: 20  # Her eğitim turunda seçilen istemci sayısı artırıldı.
+num_clients_per_round_eval: 25  # Değerlendirme istemci sayısı aynı kaldı.
+
+# Eğitim Konfigürasyonu
+config_fit:
+  lr: 0.01  # Daha hızlı yakınsama için öğrenme oranı artırıldı.
+  momentum: 0.9  # Daha iyi optimizasyon kararlılığı için momentum ayarlandı.
+  local_epochs: 10  # İstemcilerin daha uzun süre eğitim yapması ve daha iyi öğrenmesi için yerel epoch sayısı artırıldı.
+
+# Opsiyonel: Regularizasyon ayarları (aşırı öğrenmeyi önlemek için)
+regularization:
+  weight_decay: 0.0001  # Aşırı öğrenmeyi önlemek için optimizere L2 regularizasyonu eklendi.
