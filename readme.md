@@ -1,22 +1,23 @@
 # 🧠 Federated Learning-Based Cataract Detection  
 ### 📱 Integrated with Flutter & Flask Mobile Application  
+- Federated learning enables privacy-preserving model training by keeping sensitive medical data decentralized.
+- The integrated mobile application enhances accessibility, allowing users to easily obtain cataract diagnoses anytime, anywhere.
 
----
 
 ## 🖼️ Federated Learning Architecture
 
-![Federated Learning Architecture](path/to/federated_architecture.png)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/428731bf-ac95-46ec-9d6a-50c38eb1193a" alt="FL" width="486" height="414" />
+</p>
 
-*(Replace `path/to/federated_architecture.png` with the actual image path.)*
 
-### System Diagram
 
-Include your **Flask API, Flutter app, and model pipeline** here:  
-![System Diagram](path/to/system_diagram.png)
+## 🔧 System Diagram
 
-*(Replace `path/to/system_diagram.png` with your diagram image path.)*
+<p align="center"> 
+   <img width="600" height="350" alt="FLASKK" src="https://github.com/user-attachments/assets/21c254da-bd89-4ed0-8035-669bcc49d7d8" />
+</p>
 
----
 
 ## 📋 Overview  
 
@@ -54,7 +55,9 @@ FederatedCataractDetection/
 ├── toy.py
 ```
 
----
+
+
+<div align="center">
 
 ## ⚙️ Technologies Used  
 
@@ -68,7 +71,8 @@ FederatedCataractDetection/
 | **Visualization & Testing** | Matplotlib, PIL |
 | **Language** | Python 3.10+ |
 
----
+</div>
+
 
 ## 🧠 Federated Learning Flow  
 
@@ -87,7 +91,7 @@ FederatedCataractDetection/
    - Global weights are updated after each round and saved for deployment.  
 
 ---
----
+
 ## 📦 Setup and Environment Preparation
 
 You can use the following methods to install the required Python packages and set up a virtual environment for the project.
@@ -112,11 +116,6 @@ To activate the created environment:
 conda activate my_env_name
 ```
 
-
-
-
-
-
 ## 🏃‍♂️ Start Federated Training  
 
 To start the federated learning training pipeline, simply run:  
@@ -129,8 +128,6 @@ This script will:
 - Launch the Flower server and clients (configurable in `main.py`).  
 - Perform federated training rounds according to your Hydra configuration.  
 - Save the best global model weights for inference.  
-
----
 
 ---
 
@@ -186,7 +183,7 @@ conf/
     
 ```
 ---
-## 🩺 Model Inference (Standalone)  
+## 🩺 Model Inference   
 
 You can test the trained model locally using `detection.py`.  
 
@@ -209,15 +206,17 @@ Other class probability: 7.3%
 
 
 ## 🧾 Visuals  
-
-**Mobile App Screenshots**   
-
 ### Mobile Interface
-![Flutter App Screenshot](path/to/flutter_screenshot.png)
+The following screenshots showcase the **application’s main interface** and the **inference stages** where eye images are analyzed to detect cataracts.
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/e6e80183-5f30-49e9-8908-be5ffa0c0d2d" alt="Screenshot_6" width="150" />
+   <img src="https://github.com/user-attachments/assets/9f992734-749e-4089-a711-375f8d4e352a" alt="Screenshot_5" width="150" />
+   <img src="https://github.com/user-attachments/assets/5dab7dc2-a640-4067-9435-7073a834fa6a" alt="Screenshot_4" width="150" />
+   <img src="https://github.com/user-attachments/assets/4618a79b-2775-4531-aecf-8dbcafe58248" alt="Screenshot_2" width="150" />
+   <img src="https://github.com/user-attachments/assets/f4c694fa-5a3d-42c4-9b3e-e48dea54dff5" alt="Screenshot_3" width="150" />
+   <img src="https://github.com/user-attachments/assets/eda248ba-d2c4-44cc-b680-50ed1252ba59" alt="Screenshot_1" width="150" />
+</p>
 
-*(Replace `path/to/flutter_screenshot.png` with the actual image path in your repo.)*  
-
----
 
 ## 📊 Evaluation Metrics  
 
@@ -238,8 +237,6 @@ During training, the model reports:
 | Federated Efficiency | Preserved model performance without sharing sensitive data |
 | Class Accuracy (Cataract) | 93.2% |
 | Class Accuracy (Normal) | 94.1% |
-
-*(Values are example results from the latest training run.)*
 
 ---
 
