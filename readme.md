@@ -213,7 +213,6 @@ The following screenshots showcase the **application’s main interface** and th
    <img src="https://github.com/user-attachments/assets/9f992734-749e-4089-a711-375f8d4e352a" alt="Screenshot_5" width="150" />
    <img src="https://github.com/user-attachments/assets/5dab7dc2-a640-4067-9435-7073a834fa6a" alt="Screenshot_4" width="150" />
    <img src="https://github.com/user-attachments/assets/4618a79b-2775-4531-aecf-8dbcafe58248" alt="Screenshot_2" width="150" />
-   <img src="https://github.com/user-attachments/assets/f4c694fa-5a3d-42c4-9b3e-e48dea54dff5" alt="Screenshot_3" width="150" />
    <img src="https://github.com/user-attachments/assets/eda248ba-d2c4-44cc-b680-50ed1252ba59" alt="Screenshot_1" width="150" />
 </p>
 
